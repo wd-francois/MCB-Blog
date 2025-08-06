@@ -1,7 +1,14 @@
 {
   "site": {
+    "title": "My Calorie Balance",
+    "base_url": "https://mycaloriebalance.com",
+    "base_path": "/",
     "trailing_slash": true,
-    "favicon": "/favicon.ico"
+    "favicon": "/favicon.ico",
+    "logo":  "/logo.png",
+    "logo_width": 200,
+    "logo_height": 30,
+    "logo_text": "My Calorie Balance"
   },
 
   "settings": {

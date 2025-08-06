@@ -7,7 +7,16 @@ const socialLinks = Object.entries(socialData)
   .filter(([_, url]) => url && url.trim() !== ''); // Show all non-empty social links
 
 // Map social platforms to their respective icon names and colors
-const socialIcons = {
+type SocialPlatform =
+  | 'facebook' | 'twitter' | 'instagram' | 'youtube' | 'linkedin'
+  | 'github' | 'gitlab' | 'medium' | 'codepen' | 'bitbucket'
+  | 'dribbble' | 'behance' | 'pinterest' | 'soundcloud' | 'tumblr'
+  | 'reddit' | 'vk' | 'whatsapp' | 'snapchat' | 'vimeo'
+  | 'tiktok' | 'email' | 'phone' | 'website' | 'rss';
+
+type SocialIcon = { icon: string; color: string };
+
+const socialIcons: Record<SocialPlatform, SocialIcon> = {
   facebook: { icon: 'mdi:facebook', color: 'bg-blue-600' },
   twitter: { icon: 'mdi:twitter', color: 'bg-blue-500' },
   instagram: { icon: 'mdi:instagram', color: 'bg-pink-600' },
@@ -43,18 +52,19 @@ const socialIcons = {
         <h1 class="text-5xl md:text-[3.50rem] font-bold leading-tighter tracking-tighter mb-4 font-heading text-gray-900 dark:text-white">
           Welcome to
           <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-500 sm:whitespace-nowrap"
-            >Bit Doze</span
+            >My Calorie Balance</span
           >
-        </h1>
         <div class="max-w-3xl mx-auto">
           <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            Join the community to find out more about, VPS, blogging, CMS.
+            Join the community to find out more about Health & Fitness.
           </p>
         </div>
 
         <div class="flex justify-center gap-4">
           {socialLinks.map(([platform, url]) => {
-            const { icon, color } = socialIcons[platform] || { icon: 'mdi:link', color: 'bg-gray-600' };
+            const { icon, color } = (platform in socialIcons)
+              ? socialIcons[platform as SocialPlatform]
+              : { icon: 'mdi:link', color: 'bg-gray-600' };
             
             // Special case for Bluesky which isn't in the standard icon set
             if (url.includes('bsky.app')) {

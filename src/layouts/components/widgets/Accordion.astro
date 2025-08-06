@@ -52,7 +52,7 @@ const accordionId = `accordion-${label.replace(/\s+/g, '-').toLowerCase()}-${Mat
   function initAccordions() {
     document.querySelectorAll('.accordion-header').forEach(header => {
       const targetId = header.getAttribute('data-accordion-target');
-      const panel = document.getElementById(targetId);
+      const panel = targetId ? document.getElementById(targetId) : null;
       const isExpanded = header.getAttribute('aria-expanded') === 'true';
       
       // Set initial state
@@ -73,19 +73,19 @@ const accordionId = `accordion-${label.replace(/\s+/g, '-').toLowerCase()}-${Mat
   }
   
   // Function to toggle accordion state
-  function toggleAccordion() {
-    const header = this;
+  function toggleAccordion(event: Event) {
+    const header = event.currentTarget as HTMLElement;
     const isCurrentlyExpanded = header.getAttribute('aria-expanded') === 'true';
     const group = header.getAttribute('data-group');
     const targetId = header.getAttribute('data-accordion-target');
-    const currentPanel = document.getElementById(targetId);
+    const currentPanel = targetId ? document.getElementById(targetId) : null;
     
     // Close other accordions in the same group
     if (group && !isCurrentlyExpanded) {
       document.querySelectorAll(`.accordion-header[data-group="${group}"]`).forEach(groupHeader => {
         if (groupHeader !== header && groupHeader.getAttribute('aria-expanded') === 'true') {
           const groupPanelId = groupHeader.getAttribute('data-accordion-target');
-          const groupPanel = document.getElementById(groupPanelId);
+          const groupPanel = groupPanelId ? document.getElementById(groupPanelId) : null;
           groupHeader.setAttribute('aria-expanded', 'false');
           groupHeader.querySelector('svg')?.classList.remove('rotate-180');
           if (groupPanel) groupPanel.style.maxHeight = '0px';
@@ -110,7 +110,7 @@ const accordionId = `accordion-${label.replace(/\s+/g, '-').toLowerCase()}-${Mat
   function updateExpandedPanels() {
     document.querySelectorAll('.accordion-header[aria-expanded="true"]').forEach(header => {
       const targetId = header.getAttribute('data-accordion-target');
-      const panel = document.getElementById(targetId);
+      const panel = targetId ? document.getElementById(targetId) : null;
       if (panel) {
         panel.style.maxHeight = `${panel.scrollHeight}px`;
       }
